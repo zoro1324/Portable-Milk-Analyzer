@@ -1,74 +1,75 @@
-from django.shortcuts import render
+# In your_app/views.py
 
-# Create your views here.
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Supplier, MilkSubmission, District
-from .forms import MilkSubmissionForm
-from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+from .models import Cow, MilkSubmission,Supplier
+from .forms import MilkSubmissionFilterForm
 from django.utils import timezone
+from django.db.models import Q
 
-def submission_dashboard(request):
+def dashboard(request):
     """
-    Dashboard to display milk submissions with search and filter functionality.
+    Displays the home page with a list of milk submissions
+    and a form to filter them.
     """
-    # Start with all submissions, ordered by the most recent
-    submissions = MilkSubmission.objects.select_related('supplier', 'supplier__district').order_by('-timestamp')
+    # Instantiate the form, populating it with GET data if available
+    form = MilkSubmissionFilterForm(request.GET or None)
     
-    # Get all districts to populate the filter dropdown
-    districts = District.objects.all()
+    # Start with all milk submissions
+    submissions = MilkSubmission.objects.select_related('supplier', 'supplier__district').all()
 
-    # --- Search and Filter Logic ---
+    if form.is_valid():
+        search_query = form.cleaned_data.get('search_query')
+        district = form.cleaned_data.get('district')
+        date = form.cleaned_data.get('date')
 
-    # 1. Get the search query from the URL (?q=...)
-    search_query = request.GET.get('q')
-    if search_query:
-        # Filter by supplier name OR supplier RF number
-        submissions = submissions.filter(
-            Q(supplier__name__icontains=search_query) | 
-            Q(supplier__rf_no__icontains=search_query)
-        )
+        # Apply search filter if a query is provided
+        if search_query:
+            submissions = submissions.filter(
+                Q(supplier__name__icontains=search_query) |
+                Q(supplier__rf_no__icontains=search_query)
+            )
 
-    # 2. Get the district filter from the URL (?district=...)
-    district_filter = request.GET.get('district')
-    if district_filter:
-        submissions = submissions.filter(supplier__district__id=district_filter)
+        # Apply district filter
+        if district:
+            submissions = submissions.filter(supplier__district=district)
+        
+        # Apply date filter
+        if date:
+            submissions = submissions.filter(timestamp__date=date)
+        else:
+            # By default, if no date is selected, show today's submissions
+            if not request.GET: # Only default to today on initial load
+                 submissions = submissions.filter(timestamp__date=timezone.now().date())
 
-    # 3. Get the date filter from the URL (?date_filter=...)
-    date_filter = request.GET.get('date_filter')
-    if date_filter == 'today':
-        today = timezone.now().date()
-        submissions = submissions.filter(timestamp__date=today)
 
     context = {
-        'submissions': submissions,
-        'districts': districts,
-        # Pass the current filter values back to the template to keep them selected
-        'selected_district': district_filter,
-        'search_query': search_query,
+        'form': form,
+        'submissions': submissions
     }
-    return render(request, 'core/submission_dashboard.html', context)
-
-# --- Keep your other views like supplier_detail here ---
+    return render(request, 'milk_data/dashboard.html', context)
 
 def supplier_detail(request, pk):
-    """
-    Displays the detailed view for a single supplier.
-    """
+    
     supplier = get_object_or_404(Supplier, pk=pk)
-    if request.method == 'POST':
-        form = MilkSubmissionForm(request.POST)
-        if form.is_valid():
-            submission = form.save(commit=False)
-            submission.supplier = supplier
-            submission.save()
-            return redirect('supplier-detail', pk=supplier.pk)
-    else:
-        form = MilkSubmissionForm()
-    submissions = supplier.submissions.all().order_by('-timestamp')
+
+    cows = supplier.cows.all()
+
     context = {
         'supplier': supplier,
-        'submissions': submissions,
-        'form': form
+        'cows': cows 
     }
-    return render(request, 'core/supplier_detail.html', context)
+    
+    return render(request, 'milk_data/supplier_detail.html', context)
 
+def cow_detail(request, pk):
+    """
+    Displays the detail page for a single cow.
+    """
+    # Get the specific cow object or return a 404 error
+    cow = get_object_or_404(Cow, pk=pk)
+
+    context = {
+        'cow': cow
+    }
+    
+    return render(request, 'milk_data/cow_detail.html', context)

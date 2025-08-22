@@ -1,16 +1,41 @@
-# core/forms.py
+# In your_app/forms.py
 
 from django import forms
-from .models import MilkSubmission
+from .models import District
 
-class MilkSubmissionForm(forms.ModelForm):
-    class Meta:
-        model = MilkSubmission
-        # We only need the user to select the quality
-        fields = ['quality_of_milk']
-        widgets = {
-            'quality_of_milk': forms.Select(attrs={'class': 'form-select'})
-        }
-        labels = {
-            'quality_of_milk': 'Current Milk Quality'
-        }
+class MilkSubmissionFilterForm(forms.Form):
+    """
+    A form for filtering and searching milk submissions.
+    """
+    # Search field for farmer name or RF number.
+    # It's not required, so the form is valid even if it's empty.
+    search_query = forms.CharField(
+        max_length=100,
+        required=False,
+        label="", # No visible label
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Search by Farmer Name, RF No...',
+            'class': 'search-input' # Add a class for styling
+        })
+    )
+
+    # Dropdown to filter by district.
+    # It queries the District model to get all available districts.
+    district = forms.ModelChoiceField(
+        queryset=District.objects.all(),
+        required=False,
+        empty_label="Filter by District", # Placeholder text
+        label="", # No visible label
+        widget=forms.Select(attrs={'class': 'filter-select'}) # Add a class for styling
+    )
+
+    # Date field to filter by a specific date.
+    # Uses a DateInput widget which renders as <input type="date">.
+    date = forms.DateField(
+        required=False,
+        label="", # No visible label
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'filter-date' # Add a class for styling
+        })
+    )

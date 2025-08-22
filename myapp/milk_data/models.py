@@ -7,10 +7,11 @@ class Breed(models.Model):
     Represents a breed of cow.
     """
     name = models.CharField(max_length=100, unique=True, help_text="Name of the cow breed")
-    expected_milk_quality = models.TextField(help_text="Description of the typical milk quality from this breed.")
+    expected_milk_quality = models.IntegerField(help_text="Description of the typical milk quality from this breed.")
 
     def __str__(self):
-        return self.name
+        string = f"{self.name} - {self.expected_milk_quality} ltrs/day"
+        return string
 
 # This model is for geographical districts. It's linked to the Supplier.
 class District(models.Model):

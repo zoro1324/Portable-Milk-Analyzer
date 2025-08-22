@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ supplier.name }} - Details</title>
+    <link rel="stylesheet" href="{% static 'milk_data/supplier_detail.css' %}">
+</head>
+<body>
+
+    <div class="main-container">
+        <header class="page-header">
+            <h1>Supplier Details</h1>
+            <a href="{% url 'milk_data:dashboard' %}" class="back-button">Back to Dashboard</a>
+        </header>
+
+        <!-- Supplier Information Header -->
+        <section class="supplier-header">
+            <!-- NEW: Supplier Photo Container -->
+            <div class="supplier-photo-container">
+                {% if supplier.farmer_photo %}
+                    <img src="{{ supplier.farmer_photo.url }}" alt="{{ supplier.name }}" class="supplier-photo">
+                {% else %}
+                    <img src="https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg" alt="Default photo" class="supplier-photo">
+                {% endif %}
+            </div>
+
+            <!-- Supplier Details Grid -->
+            <div class="supplier-details-grid">
+                <div class="header-item">
+                    <span class="item-label">Supplier Name</span>
+                    <span class="item-value">{{ supplier.name }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">RF Number</span>
+                    <span class="item-value">{{ supplier.rf_no }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">District</span>
+                    <span class="item-value">{{ supplier.district.name|default:"N/A" }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">Phone</span>
+                    <span class="item-value">{{ supplier.phone_no }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">Warnings</span>
+                    <span class="item-value warning-pill warning-{{ supplier.warning_count|default:0 }}">
+                        {{ supplier.warning_count|default:0 }}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cow List Table -->
+        <main class="cow-list-container">
+            <h2>Registered Cows ({{ cows.count }})</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cow Name / ID</th>
+                            <th>Breed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cow in cows %}
+                        <tr>
+                            <td><a href="{% url 'milk_data:cow_detail' cow.id %}">{{ cow.cow_name }}</a></td>
+                            <td>{{ cow.breed.name|default:"Unknown" }}</td>
+                            
+                        </tr>
+                        {% empty %}
+                        <tr class="empty-row">
+                            <td colspan="2">This supplier has not registered any cows.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

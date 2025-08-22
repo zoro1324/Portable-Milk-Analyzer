@@ -1,0 +1,80 @@
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Submission Dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'milk_data/dashboard.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Milk Submission Dashboard</h1>
+            <p>Filter and search through milk submissions.</p>
+        </header>
+
+        <!-- Form for filtering -->
+        <form method="get" action="" class="controls">
+            <!-- No need for {% csrf_token %} in a GET form -->
+            
+            <div class="search-bar">
+                {{ form.search_query }}
+            </div>
+
+            <div class="filters">
+                {{ form.district }}
+                {{ form.date }}
+                <button type="submit" id="filter-btn">Apply</button>
+                <!-- Link to the same page with no query parameters to clear filters -->
+                <a href="{% url 'milk_data:dashboard' %}" class="clear-btn-link">Clear</a>
+            </div>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>RF No.</th>
+                        <th>District</th>
+                        <th>Milk Quality</th>
+                        <th>Timestamp</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in submissions %}
+                    
+                    <tr>
+                        
+                        <td><a href="{% url 'milk_data:supplier_detail' pk=submission.supplier.id %}">{{ submission.supplier.name }}</a></td>
+                        <td>{{ submission.supplier.rf_no }}</td>
+                        <td>{{ submission.supplier.district.name|default:"N/A" }}</td>
+                        <td>
+                            <!-- Add a class based on quality for styling -->
+                            <span class="quality-tag {{ submission.quality_of_milk|lower }}">
+                                {{ submission.quality_of_milk }}    
+                            </span>
+                        </td>
+                        <td>{{ submission.timestamp|date:"Y-m-d H:i A" }}</td>
+                        
+                    </tr>
+                    
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No submissions found for the selected criteria.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ cow.cow_name }} - Cow Details</title>
+    <!-- We can reuse the same new CSS file -->
+    <link rel="stylesheet" href="{% static 'milk_data/cow_detail.css' %}">
+</head>
+<body>
+
+    <div class="main-container">
+        <header class="page-header">
+            <h1>Cow Details</h1>
+            <!-- This link goes back to the supplier's page -->
+            <a href="{% url 'milk_data:supplier_detail' pk=cow.supplier.id %}" class="back-button">Back to Supplier Profile</a>
+        </header>
+
+        <!-- Cow Information Card -->
+        <section class="cow-details-card">
+            <div class="cow-photo-container">
+                {% if cow.cow_photo %}
+                    <img src="{{ cow.cow_photo.url }}" alt="{{ cow.cow_name }}" class="cow-profile-photo">
+                {% else %}
+                    <img src="{% static 'milk_data/default-cow.png' %}" alt="Default cow photo" class="cow-profile-photo">
+                {% endif %}
+            </div>
+            <div class="cow-details-grid">
+                <div class="header-item">
+                    <span class="item-label">Cow Name / ID</span>
+                    <span class="item-value">{{ cow.cow_name }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">Breed</span>
+                    <span class="item-value">{{ cow.breed.name|default:"Unknown" }}</span>
+                </div>
+                <div class="header-item">
+                    <span class="item-label">Owner</span>
+                    <span class="item-value">{{ cow.supplier.name }}</span>
+                </div>
+                 <div class="header-item">
+                    <span class="item-label">Last Vaccination</span>
+                    <span class="item-value">{{ cow.last_vaccination_date|date:"Y-m-d"|default:"N/A" }}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expected Milk Quality Section -->
+        {% if cow.breed %}
+        <section class="milk-quality-info">
+            <h2>Expected Milk Quality for {{ cow.breed.name }}</h2>
+            <p>{{ cow.breed.expected_milk_quality|linebreaksbr }}</p>
+        </section>
+        {% endif %}
+    </div>
+
+</body>
+</html>
