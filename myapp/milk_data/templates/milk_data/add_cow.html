@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Cow</title>
+    <link rel="stylesheet" href="{% static 'milk_data/add_supplier.css' %}">    
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-box">
+            <h2>Add New Cow</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="form-group">
+                    <label for="{{ form.cow_photo.id_for_label }}">Cow Photo</label>
+                    {{ form.cow_photo }}
+                    <p class="error">{{ form.cow_photo.errors }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.cow_name.id_for_label }}">Cow Name/ID</label>
+                    {{ form.cow_name }}
+                    <p class="error">{{ form.cow_name.errors }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.supplier.id_for_label }}">Associated Supplier</label>
+                    {{ form.supplier }}
+                    <p class="error">{{ form.supplier.errors }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.breed.id_for_label }}">Breed</label>
+                    {{ form.breed }}
+                    <p class="error">{{ form.breed.errors }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.last_vaccination_date.id_for_label }}">Last Vaccination Date</label>
+                    {{ form.last_vaccination_date }}
+                    <p class="error">{{ form.last_vaccination_date.errors }}</p>
+                </div>
+                
+                <button type="submit" class="btn">Save Cow</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

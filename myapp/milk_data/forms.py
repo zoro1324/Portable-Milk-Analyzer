@@ -2,7 +2,7 @@
 
 import base64
 from django import forms
-from .models import District, MilkSubmission, Supplier
+from .models import Breed, Cow, District, MilkSubmission, Supplier
 
 class MilkSubmissionFilterForm(forms.Form):
     """
@@ -66,3 +66,27 @@ class Base64ImageField(forms.Field):
         # We don't need to save the image to a file, just decode it for the ML model
         return decoded_file
 
+class CowForm(forms.ModelForm):
+    """
+    A form for creating or updating a Cow instance.
+    """
+    class Meta:
+        model = Cow
+        fields = ['cow_photo', 'cow_name', 'supplier', 'breed', 'last_vaccination_date']
+        widgets = {
+            'cow_photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'cow_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter cow name or ID'}),
+            'supplier': forms.Select(attrs={'class': 'form-control'}),
+            'breed': forms.Select(attrs={'class': 'form-control'}),
+            'last_vaccination_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+        labels = {
+            'cow_photo': 'Cow Photo',
+            'cow_name': 'Cow Name/ID',
+            'supplier': 'Associated Supplier',
+            'breed': 'Breed',
+            'last_vaccination_date': 'Last Vaccination Date',
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

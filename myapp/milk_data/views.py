@@ -270,3 +270,33 @@ def suppliers_page(request):
     }
 
     return render(request, 'milk_data/suppliers.html', context)
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import CowForm
+
+def add_cow(request,supplier_id):
+    """
+    View to add a new cow.
+    """
+    supplier = Supplier.objects.get(id=supplier_id)
+    if request.method == 'POST':
+        form = CowForm(request.POST, request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            print("Form is valid")
+            try:
+                cow = form.save(commit=False)  # Don't save yet
+                cow.supplier = supplier       # Assign the supplier foreign key
+                cow.save() 
+                messages.success(request, 'Successfully added a new cow! 🐄')
+                return redirect('supplier_detail',pk=supplier_id)  # Replace with your success URL
+            except Exception as e:
+                messages.error(request, f'An error occurred: {e}')
+    else:
+        form = CowForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'milk_data/add_cow.html', context)

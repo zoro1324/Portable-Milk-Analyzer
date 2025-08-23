@@ -15,4 +15,5 @@ urlpatterns = [
     path('add_supplier',views.add_supplier, name='add_supplier'),
     path('api/classify_milk/', views.classify_milk, name='classify_milk'),
     path("suppliers/", views.suppliers_page, name="supplier_page"),
+    path('add_cow/<int:supplier_id>', views.add_cow, name='add_cow'),        
     ]   
