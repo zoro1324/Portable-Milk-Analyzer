@@ -5,7 +5,10 @@ from .models import Cow, MilkSubmission,Supplier
 from .forms import MilkSubmissionFilterForm
 from django.utils import timezone
 from django.db.models import Q
-
+from django.contrib.auth import login,logout
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import redirect
 def dashboard(request):
     """
     Displays the home page with a list of milk submissions
@@ -73,3 +76,36 @@ def cow_detail(request, pk):
     }
     
     return render(request, 'milk_data/cow_detail.html', context)
+
+def login_view(request):
+    """
+    Handles user login manually without AuthenticationForm.
+    """
+    if request.method == 'POST':
+        # Get username and password from the form submission
+        username_from_form = request.POST.get('username')
+        password_from_form = request.POST.get('password')
+
+        try:
+            # 1. Find the user by their username
+            user = User.objects.get(username=username_from_form)
+            
+            # 2. Check if the provided password is correct for that user
+            if user.check_password(password_from_form):
+                # 3. If correct, log them in and create a session
+                login(request, user)
+                return redirect('milk_data:dashboard')
+            else:
+                # Password was incorrect
+                messages.error(request, "Invalid username or password.")
+
+        except User.DoesNotExist:
+            # Username was not found in the database
+            messages.error(request, "Invalid username or password.")
+            
+    # For a GET request, just show the page
+    return render(request, 'milk_data/login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('milk_data:login')
