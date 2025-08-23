@@ -5,16 +5,47 @@ body {
     color: #333;
     margin: 0;
     padding: 20px;
+
+    /* Example farmer image, replace with your own if needed */
+    background: 
+        linear-gradient(to left, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    min-height: 100vh;
+    position: relative;
+    background-attachment: fixed; /* Make image static */
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+        to left,
+        rgba(255,255,255,0.04) 0%,
+        rgba(255,255,255,0.12) 30%,
+        rgba(255,255,255,0.18) 60%,
+        rgba(255,255,255,0.28) 85%,
+        rgba(255,255,255,0.50) 100%
+    );
+    /* No blur, just a soft foggy overlay */
 }
 
 /* Main Container */
 .container {
-    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
     margin: 0 auto;
     background-color: #ffffff;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding-bottom: 32px;
 }
 
 /* Header */
@@ -22,6 +53,7 @@ header {
     border-bottom: 2px solid #eef2f5;
     padding-bottom: 15px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 header h1 {
@@ -43,10 +75,21 @@ header p {
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 25px;
+
+    /* Keep controls always visible above the table */
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.92);
+    z-index: 2;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 .search-bar {
     flex-grow: 1;
+
+    /* Style adjustments for search bar */
+    margin-bottom: 12px;
 }
 
 .filters {
@@ -68,6 +111,23 @@ header p {
 .controls input[type="text"] {
     width: 100%;
     max-width: 350px;
+    border-radius: 28px; /* even more rounded */
+    border: 2px solid #b0b0b0; /* thicker and visible grey color */
+}
+
+/* Add similar styles for district and date filter inputs */
+.controls select,
+.controls input[type="date"] {
+    border-radius: 28px; /* even more rounded */
+    border: 2px solid #b0b0b0; /* thicker and visible grey color */
+}
+
+/* Optionally, you can add max-width for consistency */
+.controls select {
+    max-width: 350px;
+}
+.controls input[type="date"] {
+    max-width: 350px;
 }
 
 /* Buttons */
@@ -75,7 +135,7 @@ header p {
 .clear-btn-link {
     padding: 10px 18px;
     border: none;
-    border-radius: 6px;
+    border-radius: 999px; /* fully round buttons */
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
@@ -85,66 +145,117 @@ header p {
     transition: background-color 0.3s ease;
 }
 
+/* Apply Button */
 #filter-btn {
-    background-color: #3498db;
+    background-color: #009849; /* Green */
     color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px; /* Make button round */
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #filter-btn:hover {
-    background-color: #2980b9;
+    background-color: #007a3a;
 }
 
+/* Apply Button active (clicked) state */
+#filter-btn:active {
+    background-color: rgba(0, 154, 78, 0.5); /* green with 50% opacity */
+}
+
+/* Cancel Button */
 .clear-btn-link {
-    background-color: #e74c3c;
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #f44336;
     color: white;
+    border-radius: 999px; /* Make button round */
+    text-align: center;
+    transition: background-color 0.3s;
 }
 
 .clear-btn-link:hover {
-    background-color: #c0392b;
+    background-color: #c62828;
 }
-
 
 /* Table Styles */
 .table-container {
+    /* Only this div is scrollable */
+    max-height: 70vh;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.92);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    /* Glide/momentum scroll for supported browsers */
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; /* iOS momentum */
+
     overflow-x: auto; /* Ensures table is scrollable on small screens */
+}
+
+.table-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 8px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    min-width: 900px;
+    border: 2px solid #009A4E; /* green border */
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 0; /* no padding for the table */
 }
 
 th, td {
-    padding: 12px 15px;
+    padding: 12px 16px;
     text-align: left;
-    border-bottom: 1px solid #eef2f5;
+    border-bottom: 2px solid #009A4E; /* green row separators */
 }
 
 thead th {
-    background-color: #f0f4f7;
+    background: #f5f5f5;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    background-color: #e6f7ef; /* light green background */
     font-weight: 600;
-    color: #4a6c8c;
+    color: #009A4E; /* green text */
 }
 
+/* Optional: subtle hover effect */
 tbody tr:hover {
-    background-color: #f9fafb;
+    background: #f0f8ff;
 }
 
 /* Quality Tags for visual clarity */
 .quality-tag {
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-    text-transform: capitalize;
+    color: white;
+    font-weight: bold;
 }
 
+.quality-tag.premium {
+    background-color: #4caf50; /* Green for premium */
+}
 
-.quality-tag.good { background-color: #2ecc71; }
-.quality-tag.average { background-color: #f39c12; }
-.quality-tag.bad { background-color: #e74c3c; }
+.quality-tag.standard {
+    background-color: #2196f3; /* Blue for standard */
+}
+
+.quality-tag.substandard {
+    background-color: #f44336; /* Red for substandard */
+}
 
 .action-link {
     color: #3498db;
@@ -154,6 +265,11 @@ tbody tr:hover {
 
 .action-link:hover {
     text-decoration: underline;
+}
+
+/* Active filter state: green border with 100% opacity */
+.active-filter {
+    border: 2px solid #009A4E !important;
 }
 
 /* Responsive Design */
@@ -166,4 +282,35 @@ tbody tr:hover {
     .controls input[type="text"] {
         max-width: 100%;
     }
+}
+
+.controls input[type="text"]:hover,
+.controls select:hover,
+.controls input[type="date"]:hover {
+    color: #ED1D24;
+}
+
+/* Prevent color change on focus */
+.controls input[type="text"]:focus,
+.controls select:focus,
+.controls input[type="date"]:focus {
+    color: inherit;
+}
+.controls select:focus,
+.controls input[type="date"]:focus {
+    color: inherit;
+}
+
+/* Supplier Name Link: look like bold black text, act like link on hover */
+.table-container td a {
+    color: #222;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s, text-decoration 0.2s;
+}
+
+.table-container td a:hover,
+.table-container td a:focus {
+    color: #ED1D24;
+    cursor: pointer;
 }

@@ -1,10 +1,21 @@
 /* General Body Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #343a40;
+    background-color: #f4f7f9;
+    color: #333;
     margin: 0;
     padding: 20px;
+
+    /* Example farmer image, replace with your own if needed */
+    background: 
+        linear-gradient(to left, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    min-height: 100vh;
+    position: relative;
+    background-attachment: fixed; /* Make image static */
 }
 
 .main-container {
@@ -49,7 +60,7 @@ body {
     align-items: center;
     background-color: #ffffff;
     padding: 25px;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid #dee2e6;
     margin-bottom: 30px;
 }
@@ -115,7 +126,7 @@ body {
 .table-wrapper {
     background-color: #ffffff;
     border: 1px solid #dee2e6;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
 }
 
@@ -174,4 +185,47 @@ td {
     .supplier-details-grid {
         text-align: left; /* Realign text to the left */
     }
+}
+
+.kerala-bg-absolute {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.kerala-bg-img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: left;
+  opacity: 0.45;
+}
+
+.kerala-bg-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, #fff 90%);
+}
+body > *:not(.kerala-bg-absolute) {
+  position: relative;
+  z-index: 1;
+}
+
+.table-wrapper td a {
+    color: #222;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s, text-decoration 0.2s;
+}
+
+.table-wrapper td a:hover,
+.table-wrapper td a:focus {
+    color: #ED1D24;
+    cursor: pointer;
 }

@@ -2,6 +2,26 @@
 /* ====== Styles for Cow Detail Page ====== */
 /* ========================================= */
 
+/* General Body Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+
+    /* Farmer background image */
+    background: 
+        linear-gradient(to left, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%),
+        url('https://images.pexels.com/photos/877234/pexels-photo-877234.jpeg');
+    background-size: cover;       /* make it fill the viewport */
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+    position: relative;
+    background-attachment: fixed; /* keep it static */
+}
+
 .cow-details-card {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -66,3 +86,4 @@
         text-align: left;
     }
 }
+
