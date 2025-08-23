@@ -44,7 +44,7 @@ class MilkSubmissionFilterForm(forms.Form):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['farmer_photo', 'name', 'rf_no', 'phone_no', 'district']
+        fields = ['farmer_photo', 'name', 'rf_no', 'phone_no', 'district', 'address']
         
 
 

@@ -1,4 +1,3 @@
-# In your_app/views.py
 
 from django.shortcuts import render, get_object_or_404
 from .models import Cow, District, MilkSubmission,Supplier
@@ -22,10 +21,16 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from .models import MilkSubmission
+from django.core.paginator import Paginator
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def home(request):
     return render(request, 'milk_data/home.html')
 
+
+@login_required
 def dashboard(request):
     """
     Displays the home page with a list of milk submissions
@@ -68,6 +73,7 @@ def dashboard(request):
     }
     return render(request, 'milk_data/dashboard.html', context)
 
+@login_required
 def supplier_detail(request, pk):
     
     supplier = get_object_or_404(Supplier, pk=pk)
@@ -81,6 +87,7 @@ def supplier_detail(request, pk):
     
     return render(request, 'milk_data/supplier_detail.html', context)
 
+@login_required
 def cow_detail(request, pk):
     """
     Displays the detail page for a single cow.
@@ -93,6 +100,7 @@ def cow_detail(request, pk):
     }
     
     return render(request, 'milk_data/cow_detail.html', context)
+
 
 def login_view(request):
     """
@@ -123,11 +131,12 @@ def login_view(request):
     # For a GET request, just show the page
     return render(request, 'milk_data/login.html')
 
+
 def logout_view(request):
     logout(request)
     return redirect('milk_data:login')
 
-
+@login_required
 def add_supplier(request):
     if request.method == "POST":
         form = SupplierForm(request.POST, request.FILES)
@@ -200,22 +209,22 @@ def classify_milk(request):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
-from django.core.paginator import Paginator
-
+@login_required
 def report(request,pk):
 
-    
+    supplier = get_object_or_404(Supplier, pk=pk)
+    message = f"This email is to notify the poor quality of milk submitted by {supplier.name} with RF number {supplier.rf_no}. Kindly take necessary actions. His address is {supplier.address} and phone number is {supplier.phone_no}."
 
     send_mail(
-    subject="Milk Submission Alert",
-    message="New milk submission received with RF number 1234.",
+    subject="Report about the milk quality",
+    message=message,
     from_email=None,   # uses DEFAULT_FROM_EMAIL
-    recipient_list=["receiver@example.com"],
+    recipient_list=["srishanth232007@gmail.com"],
     fail_silently=False,
 )
-    
-    return redirect('milk_data:supplier', pk=pk)  # replace 1 with actual supplier ID
+    return redirect('milk_data:supplier_detail', pk=pk)  # replace 1 with actual supplier ID
 
+@login_required
 def suppliers_page(request):
     """
     Renders the suppliers page with a list of suppliers,
