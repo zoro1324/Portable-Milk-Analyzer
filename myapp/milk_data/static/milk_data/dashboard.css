@@ -58,8 +58,14 @@ header {
 
 header h1 {
     margin: 0;
-    color: #2c3e50;
     font-size: 28px;
+    /* Kerala theme: mild red and green gradient */
+    background: linear-gradient(90deg, #00ff80 0%, #ff0008 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
 }
 
 header p {
@@ -241,20 +247,23 @@ tbody tr:hover {
 .quality-tag {
     padding: 4px 8px;
     border-radius: 12px;
-    color: white;
+    color: rgb(21, 14, 14);
     font-weight: bold;
 }
 
 .quality-tag.premium {
-    background-color: #4caf50; /* Green for premium */
+    background-color: #4caf50; /* Green for premium/good */
+    color: #e0e0e0;
 }
 
 .quality-tag.standard {
-    background-color: #2196f3; /* Blue for standard */
+    background-color: #ffc107; /* Yellow for standard/moderate */
+    color: #ffffff;
 }
 
 .quality-tag.substandard {
-    background-color: #f44336; /* Red for substandard */
+    background-color: #f44336; /* Red for substandard/spoiled */
+    color: #fff;
 }
 
 .action-link {

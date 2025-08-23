@@ -1,89 +1,105 @@
-/* ========================================= */
-/* ====== Styles for Cow Detail Page ====== */
-/* ========================================= */
+    /* ========================================= */
+    /* ====== Styles for Cow Detail Page ====== */
+    /* ========================================= */
 
-/* General Body Styles */
-body {
+    /* General Body Styles */
+    body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f4f7f9;
     color: #333;
     margin: 0;
     padding: 20px;
-
-    /* Farmer background image */
-    background: 
-        linear-gradient(to left, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%),
-        url('/media/background/cow_details.jpg');
-    background-size: cover;       /* make it fill the viewport */
-    background-repeat: no-repeat;
-    background-position: center center;
     min-height: 100vh;
     position: relative;
-    background-attachment: fixed; /* keep it static */
+
+    /* Kerala Farmer background image with left-to-right fade */
+    background:
+        linear-gradient(to right, rgba(255,255,255,0.15) 0%, #f8f9fa 80%),
+        url('background/cow_details.jpg') left center/cover no-repeat;
+    background-attachment: fixed;
 }
 
-.cow-details-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 25px;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    margin-bottom: 30px;
-}
 
-.cow-photo-container {
-    width: 120px;
-    height: 120px;
-}
-
-.cow-profile-photo {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 3px solid #dee2e6;
-}
-
-.cow-details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px;
-}
-
-.milk-quality-info {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.milk-quality-info h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: #212529;
-}
-
-.milk-quality-info p {
-    margin: 0;
-    color: #495057;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments for cow detail card */
-@media (max-width: 600px) {
+    /* Cow Details Card */
     .cow-details-card {
-        grid-template-columns: 1fr; /* Stack photo on top */
-        text-align: center;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 25px;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-    .cow-photo-container {
-        margin: 0 auto 20px auto;
-    }
-    .cow-details-grid {
-        text-align: left;
-    }
-}
 
+    /* Cow Photo */
+    .cow-photo-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .cow-profile-photo {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 3px solid #dee2e6;
+    }
+
+    /* Cow Details Grid */
+    .cow-details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+    }
+
+    .cow-details-grid div {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .cow-details-grid div:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Milk Quality Info */
+    .milk-quality-info {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .milk-quality-info h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: #212529;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 5px;
+    }
+
+    .milk-quality-info p {
+        margin: 0 0 10px 0;
+        color: #495057;
+        line-height: 1.6;
+    }
+
+    /* Responsive adjustments for cow detail card */
+    @media (max-width: 600px) {
+        .cow-details-card {
+            grid-template-columns: 1fr; /* Stack photo on top */
+            text-align: center;
+        }
+        .cow-photo-container {
+            margin: 0 auto 20px auto;
+        }
+        .cow-details-grid {
+            text-align: left;
+        }
+    }

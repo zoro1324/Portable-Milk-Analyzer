@@ -5,17 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ cow.cow_name }} - Cow Details</title>
-    <!-- We can reuse the same new CSS file -->
-    <link rel="stylesheet" href="{% static 'milk_data/cow_detail.css' %}">
-</head>
-<body style="background-image: url('https://i.pinimg.com/1200x/ed/86/a8/ed86a8008f408dfa45687c420dfef7ec.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-attachment: fixed;">
-
     
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'milk_data/cow_detail.css' %}">
+
+    <!-- Inline background fix -->
+    <style>
+        body {
+            background-image: url("{% static 'milk_data/background/cow_details.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed; /* Keeps it static */
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
     <div class="main-container">
         <header class="page-header">
             <h1>Cow Details</h1>
-            <!-- This link goes back to the supplier's page -->
-            <a href="{% url 'milk_data:supplier_detail' pk=cow.supplier.id %}" class="back-button">Back to Supplier Profile</a>
+            <!-- Back to supplier profile -->
+            <a href="{% url 'milk_data:supplier_detail' pk=cow.supplier.id %}" class="back-button">
+                Back to Supplier Profile
+            </a>
         </header>
 
         <!-- Cow Information Card -->
@@ -40,7 +54,7 @@
                     <span class="item-label">Owner</span>
                     <span class="item-value">{{ cow.supplier.name }}</span>
                 </div>
-                 <div class="header-item">
+                <div class="header-item">
                     <span class="item-label">Last Vaccination</span>
                     <span class="item-value">{{ cow.last_vaccination_date|date:"Y-m-d"|default:"N/A" }}</span>
                 </div>
@@ -55,6 +69,5 @@
         </section>
         {% endif %}
     </div>
-
 </body>
 </html>
