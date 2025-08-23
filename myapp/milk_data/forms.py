@@ -1,7 +1,8 @@
 # In your_app/forms.py
 
+import base64
 from django import forms
-from .models import District, Supplier
+from .models import District, MilkSubmission, Supplier
 
 class MilkSubmissionFilterForm(forms.Form):
     """
@@ -45,3 +46,23 @@ class SupplierForm(forms.ModelForm):
         model = Supplier
         fields = ['farmer_photo', 'name', 'rf_no', 'phone_no', 'district']
         
+
+
+class Base64ImageField(forms.Field):
+    """
+    A form field that handles Base64-encoded image strings.
+    It decodes the string and converts it into a ContentFile.
+    """
+    def to_python(self, data):
+        if data is None:
+            return None
+        
+        try:
+            # Assuming data is a simple base64 string
+            decoded_file = base64.b64decode(data)
+        except TypeError:
+            raise forms.ValidationError("Invalid image data. Must be a Base64 encoded string.")
+        
+        # We don't need to save the image to a file, just decode it for the ML model
+        return decoded_file
+

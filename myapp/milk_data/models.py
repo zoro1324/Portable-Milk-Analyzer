@@ -74,3 +74,4 @@ class MilkSubmission(models.Model):
 
     def __str__(self):
         return f"Submission from {self.supplier.name} at {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
+

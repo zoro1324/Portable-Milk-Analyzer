@@ -11,4 +11,5 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name='logout'),
     path('add_supplier',views.add_supplier, name='add_supplier'),
-]   
+    path('api/classify_milk/', views.classify_milk, name='classify_milk'),
+    ]   
