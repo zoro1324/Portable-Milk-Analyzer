@@ -6,9 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ supplier.name }} - Details</title>
     <link rel="stylesheet" href="{% static 'milk_data/supplier_detail.css' %}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0%;
+            border: 2px solid #009A4E;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid #009A4E;
+        }
+        thead th {
+            background-color: #e6f7ef;
+            font-weight: 600;
+            color: #009A4E;
+        }
+    </style>
 </head>
 <body>
-
+    
     <div class="main-container">
         <header class="page-header">
             <h1>Supplier Details</h1>
