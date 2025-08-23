@@ -13,7 +13,7 @@ body {
     /* Farmer background image */
     background: 
         linear-gradient(to left, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%),
-        url('https://images.pexels.com/photos/877234/pexels-photo-877234.jpeg');
+        url('/media/background/cow_details.jpg');
     background-size: cover;       /* make it fill the viewport */
     background-repeat: no-repeat;
     background-position: center center;
