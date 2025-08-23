@@ -13,10 +13,18 @@ import numpy as np
 from .models import MilkSubmission, Supplier
 import tensorflow as tf
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework import status
 from .serializers import MilkSubmissionRequestSerializer
 from PIL import Image
+from django.core.mail import send_mail
+import numpy as np
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .models import MilkSubmission
+
+def home(request):
+    return render(request, 'milk_data/home.html')
 
 def dashboard(request):
     """
@@ -133,18 +141,6 @@ def add_supplier(request):
     return render(request, 'milk_data/new_supplier.html', {'form': form})
 # load ML model once
 
-import base64
-import numpy as np
-import cv2
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
-from .models import MilkSubmission
-from .ml_model import predict_milk_quality  # your ML classification function
-
-
 MODEL_PATH = "ML_model/milk_quality_classifier/milk_quality_classifier.keras"
 model = tf.keras.models.load_model(MODEL_PATH)
 
@@ -203,3 +199,65 @@ def classify_milk(request):
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
+from django.core.paginator import Paginator
+
+def report(request,pk):
+
+    
+
+    send_mail(
+    subject="Milk Submission Alert",
+    message="New milk submission received with RF number 1234.",
+    from_email=None,   # uses DEFAULT_FROM_EMAIL
+    recipient_list=["receiver@example.com"],
+    fail_silently=False,
+)
+    
+    return redirect('milk_data:supplier', pk=pk)  # replace 1 with actual supplier ID
+
+def suppliers_page(request):
+    """
+    Renders the suppliers page with a list of suppliers,
+    including search and filter functionality.
+    """
+    # Get all districts to populate the filter dropdown
+    districts = District.objects.all().order_by('name')
+
+    # Start with all suppliers
+    supplier_list = Supplier.objects.all()
+
+    # Handle search query
+    query = request.GET.get('q')
+    if query:
+        supplier_list = supplier_list.filter(
+            Q(name__icontains=query) |
+            Q(rf_no__icontains=query) |
+            Q(district__name__icontains=query)
+        ).distinct()
+
+    # Handle district filter
+    district_id = request.GET.get('district')
+    selected_district = None
+    if district_id:
+        supplier_list = supplier_list.filter(district_id=district_id)
+        # Get the selected district object to maintain the dropdown state
+        selected_district = District.objects.get(id=district_id)
+
+    # Order the final filtered list
+    supplier_list = supplier_list.order_by('name')
+
+    # Set up pagination with 6 suppliers per page
+    paginator = Paginator(supplier_list, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'suppliers': page_obj.object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'districts': districts,
+        'selected_district': selected_district,
+    }
+
+    return render(request, 'milk_data/suppliers.html', context)

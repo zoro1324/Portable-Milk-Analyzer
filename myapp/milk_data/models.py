@@ -37,6 +37,7 @@ class Supplier(models.Model):
     # Foreign Key to the District table. If a district is deleted, this field becomes null.
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
     total_cows = models.PositiveIntegerField(default=0)
+    
     # This field tracks the overall quality warning level for the supplier.
     warning_count = models.IntegerField(default=0)
 

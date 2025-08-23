@@ -82,10 +82,10 @@
                         <td>
     <span class="quality-tag
         {% if submission.quality_of_milk|lower == 'good' %}
-            premium
-        {% elif submission.quality_of_milk|lower == 'moderate' %}
+            good
+        {% elif submission.quality_of_milk|lower == 'average' %}
             standard
-        {% elif submission.quality_of_milk|lower == 'spoiled' %}
+        {% elif submission.quality_of_milk|lower == 'bad' %}
             substandard
         {% endif %}
     ">

@@ -130,3 +130,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Email settings (Gmail Example)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = decouple.config("EMAIL_HOST")  # e.g., 'smtp.gmail.com'
+EMAIL_PORT = decouple.config("EMAIL_PORT", cast=int)  # e.g., 587 for TLS
+EMAIL_USE_TLS = decouple.config("EMAIL_USE_TLS", cast=bool)  # True for TLS
+EMAIL_HOST_USER = decouple.config("EMAIL_HOST_USER")       # replace with your email
+EMAIL_HOST_PASSWORD = decouple.config("EMAIL_HOST_PASSWORD")     # use Gmail App Password, not your normal password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

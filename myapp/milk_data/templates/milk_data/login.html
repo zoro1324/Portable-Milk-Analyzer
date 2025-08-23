@@ -2,41 +2,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Milk Analyzer</title>
-    <link rel="stylesheet" href="{% static 'milk_data/login.css' %}">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Kerala Homes - Login</title>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style type="text/tailwindcss">
+    :root {
+      --primary-color: #4A7729;
+      --secondary-color: #C68B59;
+      --background-light: #F4EAD5;
+      --text-dark: #3A2E2C;
+      --text-light: #6b5e5a;
+      --border-color: #D3B89E;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+    body.fade-out {
+      opacity: 0;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-[var(--background-light)] text-[var(--text-dark)] fade-out">
 
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Welcome Back</h2>
-            <p>Please log in to access your dashboard.</p>
-            
-            {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                        <span class="error-message">{{ message }}</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-            <form method="post">
-                {% csrf_token %}
-                <!-- UPDATED: Use standard HTML inputs -->
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required>
-                </div>
-                <button type="submit" class="login-button">Log In</button>
-            </form>
-        </div>
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute inset-0">
+      <img alt="Farmers working in a field" class="h-full w-full object-cover object-left opacity-40" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80" />
+      <div class="absolute inset-0 bg-gradient-to-l from-white/60 via-white/0 to-white/0"></div>
     </div>
+  </div>
+
+  <!-- Login Section -->
+  <div class="relative z-10 flex h-full grow flex-col">
+    <div class="container mx-auto flex flex-1 items-center justify-end px-4 py-12 sm:px-6 lg:px-8">
+      <div class="w-full max-w-md space-y-8 md:mr-12 lg:mr-24 xl:mr-32">
+        
+        <!-- Logo + Title -->
+        <div class="text-center">
+          <svg class="mx-auto h-12 w-auto text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+          </svg>
+          <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-[var(--text-dark)]">
+            The Milk world of Kerala
+          </h2>
+          <p class="mt-2 text-center text-sm text-[var(--text-light)]">
+            Log in to your account
+          </p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" action="{% url 'milk_data:login' %}" method="POST" class="mt-8 space-y-6">
+          {% csrf_token %}
+
+          <div class="rounded-md shadow-sm">
+            <div>
+              <label class="sr-only" for="username">User ID</label>
+              <input id="username" name="username" type="text" required 
+                     placeholder="User ID"
+                     class="relative block w-full appearance-none rounded-md border border-[var(--border-color)] bg-[var(--background-light)] px-3 py-4 text-[var(--text-dark)] placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" />
+            </div>
+            <div class="pt-3">
+              <label class="sr-only" for="password">Password</label>
+              <input id="password" name="password" type="password" required 
+                     placeholder="Password"
+                     class="relative block w-full appearance-none rounded-md border border-[var(--border-color)] bg-[var(--background-light)] px-3 py-4 text-[var(--text-dark)] placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" />
+            </div>
+          </div>
+
+          <!-- Django Messages -->
+          {% if messages %}
+          <div class="mt-4">
+            {% for message in messages %}
+              <p class="text-red-600 text-sm">{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Submit Button -->
+          <div>
+            <button id="login-btn" type="submit"
+              class="group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--primary-color)] py-3 px-4 text-sm font-semibold text-white hover:bg-[var(--secondary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-[var(--background-light)] transition-colors duration-300">
+              Log in
+            </button>
+          </div>
+
+          
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fade In/Out Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.remove("fade-out");
+  });
+  document.querySelector("#login-form").addEventListener("submit", function(e) {
+    document.body.classList.add("fade-out");
+  });
+</script>
 
 </body>
 </html>
+ 
