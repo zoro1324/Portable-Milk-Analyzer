@@ -1,0 +1,82 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.form-box {
+  background: #fff;
+  padding: 30px 35px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.form-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 22px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  color: #444;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #5c6bc0;
+  outline: none;
+}
+
+.form-group input[type="file"] {
+  padding: 5px;
+}
+
+.error {
+  color: #d93025;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #5c6bc0;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #3949ab;
+}

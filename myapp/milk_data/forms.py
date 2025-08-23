@@ -1,7 +1,7 @@
 # In your_app/forms.py
 
 from django import forms
-from .models import District
+from .models import District, Supplier
 
 class MilkSubmissionFilterForm(forms.Form):
     """
@@ -39,3 +39,9 @@ class MilkSubmissionFilterForm(forms.Form):
             'class': 'filter-date' # Add a class for styling
         })
     )
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = ['farmer_photo', 'name', 'rf_no', 'phone_no', 'district']
+        

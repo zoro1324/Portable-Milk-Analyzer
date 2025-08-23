@@ -1,8 +1,8 @@
 # In your_app/views.py
 
 from django.shortcuts import render, get_object_or_404
-from .models import Cow, MilkSubmission,Supplier
-from .forms import MilkSubmissionFilterForm
+from .models import Cow, District, MilkSubmission,Supplier
+from .forms import MilkSubmissionFilterForm, SupplierForm
 from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth import login,logout
@@ -109,3 +109,16 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('milk_data:login')
+
+
+def add_supplier(request):
+    if request.method == "POST":
+        form = SupplierForm(request.POST, request.FILES)
+        print("Here")
+        if form.is_valid():
+            form.save()
+            return redirect('milk_data:dashboard')  # update with your list page
+    else:
+        form = SupplierForm()
+
+    return render(request, 'milk_data/new_supplier.html', {'form': form})

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Supplier</title>
+  <link rel="stylesheet" href="{% static 'milk_data/new_supplier.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-box">
+      <h2>Add New Supplier</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-group">
+          <label for="id_farmer_photo">Farmer Photo</label>
+          <input type="file" name="farmer_photo" id="id_farmer_photo">
+          <p class="error">{{ form.farmer_photo.errors }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="id_name">Farmer Name</label>
+          <input type="text" name="name" id="id_name" value="{{ form.name.value|default:'' }}">
+          <p class="error">{{ form.name.errors }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="id_rf_no">RF Number</label>
+          <input type="text" name="rf_no" id="id_rf_no" value="{{ form.rf_no.value|default:'' }}">
+          <p class="error">{{ form.rf_no.errors }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="id_phone_no">Phone Number</label>
+          <input type="text" name="phone_no" id="id_phone_no" value="{{ form.phone_no.value|default:'' }}">
+          <p class="error">{{ form.phone_no.errors }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="id_district">District</label>
+          <select name="district" id="id_district">
+            <option value="">-- Select District --</option>
+            {% for d in form.fields.district.queryset %}
+              <option value="{{ d.id }}" {% if form.district.value == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+            {% endfor %}
+          </select>
+          <p class="error">{{ form.district.errors }}</p>
+        </div>
+
+        <button type="submit" class="btn">Save Supplier</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
