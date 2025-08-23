@@ -26,6 +26,29 @@
             color: #009A4E;
         }
     </style>
+
+    <style>
+        body {
+            background:
+                url("{% static 'milk_data/background/supplier_details.jpg' %}") left center/cover no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: rgba(255,255,255,0.65); /* Slightly more foggy */
+        }
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
     
@@ -101,6 +124,5 @@
             </div>
         </main>
     </div>
-
 </body>
 </html>

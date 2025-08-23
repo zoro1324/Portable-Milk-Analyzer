@@ -12,13 +12,24 @@
     <!-- Inline background fix -->
     <style>
         body {
-            background-image: url("{% static 'milk_data/background/cow_details.jpg' %}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed; /* Keeps it static */
+            background:
+                url("{% static 'milk_data/background/cow_detail.jpg' %}") left center/cover no-repeat;
+            background-attachment: fixed;
             margin: 0;
             padding: 20px;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: rgba(255,255,255,0.55) /* Slightly more foggy */
+        }
+        body > * {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>

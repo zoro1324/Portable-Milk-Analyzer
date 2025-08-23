@@ -9,6 +9,28 @@
     <title>Milk Submission Dashboard</title>
     
     <link rel="stylesheet" href="{% static 'milk_data/dashboard.css' %}">
+    <style>
+        body {
+            background:
+                url("{% static 'milk_data/background/dashboard.jpg' %}") left center/cover no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: rgba(255,255,255,0.50); /* Slightly more foggy */
+        }
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -42,7 +64,7 @@
                 <thead>
                     <tr>
                         <th>Supplier Name</th>
-                        <th>RF No.</th>
+                        <th>RF ID</th>
                         <th>District</th>
                         <th>Milk Quality</th>
                         <th>Timestamp</th>

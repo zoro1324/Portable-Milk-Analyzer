@@ -108,7 +108,7 @@ body {
     font-weight: bold;
     padding: 4px 10px;
     border-radius: 12px;
-    color: #fff;
+    color: #fff !important;
     align-self: flex-start;
     font-size: 14px;
 }
@@ -228,4 +228,54 @@ body > *:not(.kerala-bg-absolute) {
 .table-wrapper td a:focus {
     color: #ED1D24;
     cursor: pointer;
+}
+
+/* Back to Dashboard button: green, red on hover */
+.back-button {
+    background: #009A4E;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,154,78,0.08);
+    display: inline-block;
+    margin-top: 10px;
+}
+.back-button:hover,
+.back-button:focus {
+    background: #ED1D24;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Supplier Info Labels: bold, green-red gradient */
+.item-label {
+    font-weight: 700;
+    font-size: 1.08em;
+    background: linear-gradient(90deg, #009A4E 0%, #d70007 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+/* Supplier Info Values: normal weight */
+.item-value {
+    font-weight: 300;
+    color: #222;
+}
+
+/* Table header: COW NAME / ID and BREED in red */
+/* Table header: COW NAME / ID and BREED in red, pale green background */
+.cow-list-container th {
+    color: #ED1D24 !important;
+    font-weight: 700;
+    background: #7dd2a7 !important; /* Pale green */
+    letter-spacing: 0.5px;
 }

@@ -14,7 +14,7 @@ class MilkSubmissionFilterForm(forms.Form):
         required=False,
         label="", # No visible label
         widget=forms.TextInput(attrs={
-            'placeholder': 'Search by Farmer Name, RF No...',
+            'placeholder': 'Search by Farmer Name, RF ID...',
             'class': 'search-input' # Add a class for styling
         })
     )
