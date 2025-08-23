@@ -25,23 +25,37 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background: rgba(255,255,255,0.55) /* Slightly more foggy */
+            background: rgba(255,255,255,0.85) /* Slightly more foggy */
         }
         body > * {
             position: relative;
             z-index: 1;
         }
+        .gradient-title {
+            background: linear-gradient(90deg, #4A7729, #C68859);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <header class="page-header">
-            <h1>Cow Details</h1>
-            <!-- Back to supplier profile -->
-            <a href="{% url 'milk_data:supplier_detail' pk=cow.supplier.id %}" class="back-button">
-                Back to Supplier Profile
-            </a>
-        </header>
+        <div class="main-container">
+            <header class="page-header">
+                <h1 class="gradient-title">Cow Details</h1>
+                <div class="cow-detail-actions">
+                    <a href="{% url 'milk_data:supplier_detail' pk=cow.supplier.id %}" class="btn-owner">
+                        Back to Owner
+                    </a>
+                    <a href="{% url 'milk_data:dashboard' %}" class="btn-dashboard">
+                        Back to Dashboard
+                    </a>
+                </div>
+            </header>
 
         <!-- Cow Information Card -->
         <section class="cow-details-card">
@@ -72,11 +86,12 @@
             </div>
         </section>
 
-        <!-- Expected Milk Quality Section -->
+        </section>
+
         {% if cow.breed %}
-        <section class="milk-quality-info">
-            <h2>Expected Milk Quality for {{ cow.breed.name }}</h2>
-            <p>{{ cow.breed.expected_milk_quality|linebreaksbr }}</p>
+        <section class="milk-quality-container" style="margin-top: 32px; background: rgba(255,255,255,0.95); border-radius: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 28px; max-width: 900px;">
+            <h2 style="margin-top: 0;">Expected Milk Quality for {{ cow.breed.name }} (in Litres)</h2>
+            <p style="font-size: 1.15rem;">{{ cow.breed.expected_milk_quality|linebreaksbr }}</p>
         </section>
         {% endif %}
     </div>

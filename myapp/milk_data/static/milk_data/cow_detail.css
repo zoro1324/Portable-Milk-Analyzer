@@ -1,4 +1,4 @@
-    /* ========================================= */
+/* ========================================= */
     /* ====== Styles for Cow Detail Page ====== */
     /* ========================================= */
 
@@ -19,87 +19,194 @@
 }
 
 
-    /* Cow Details Card */
+   /* Cow Details Card: big image left, details right in column */
+.cow-details-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding: 24px 24px 8px 16px; /* Further reduced padding */
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    gap: 36px;
+}
+
+.cow-photo-container {
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cow-profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #dee2e6;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.cow-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+.header-item {
+    background: #f8f9fa;
+    padding: 15px 18px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-label {
+    font-weight: 700;
+    font-size: 1.08em;
+    background: linear-gradient(90deg, #009A4E 0%, #ED1D24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.item-value {
+    font-weight: 500;
+    color: #222;
+}
+
+/* Responsive: stack vertically on small screens */
+.cow-details-card {
+    display: flex;
+    align-items: stretch;
+    background-color: #ffffff;
+    padding: 24px 24px 24px 24px; /* Further reduced padding */
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    gap: 36px;
+    min-height: 340px;
+    height: 340px;
+    max-width: 900px;      /* Reduce container width */
+    margin-left: auto;     /* Center horizontally */
+    margin-right: auto;    /* Center horizontally */
+}
+
+/* Make sure the details grid fills the right half */
+.cow-details-grid {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 50%;
+    justify-content: center;
+}
+
+/* Make sure the photo fills the left half */
+.cow-photo-container {
+    flex: 1 1 0;
+    max-width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 950px) {
     .cow-details-card {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 25px;
+        max-width: 98vw;
+        height: auto;
+        min-height: unset;
+        flex-direction: column;
         align-items: center;
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 8px;
-        border: 1px solid #dee2e6;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    /* Cow Photo */
-    .cow-photo-container {
-        width: 120px;
-        height: 120px;
-    }
-
-    .cow-profile-photo {
-        width: 100%;
-        height: 100%;
-        border-radius: 8px;
-        object-fit: cover;
-        border: 3px solid #dee2e6;
-    }
-
-    /* Cow Details Grid */
-    .cow-details-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        padding: 24px; /* Reduced padding for mobile */
         gap: 20px;
     }
-
-    .cow-details-grid div {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 6px;
-        border: 1px solid #e9ecef;
-        transition: transform 0.2s ease-in-out;
+    .cow-photo-container,
+    .cow-details-grid {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
     }
+}
 
-    .cow-details-grid div:hover {
-        transform: translateY(-3px);
-    }
 
-    /* Milk Quality Info */
-    .milk-quality-info {
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
+.cow-detail-actions {
+    float: right;
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 
-    .milk-quality-info h2 {
-        margin-top: 0;
-        margin-bottom: 15px;
-        font-size: 20px;
-        color: #212529;
-        border-bottom: 2px solid #dee2e6;
-        padding-bottom: 5px;
-    }
 
-    .milk-quality-info p {
-        margin: 0 0 10px 0;
-        color: #495057;
-        line-height: 1.6;
-    }
+.btn-owner, .btn-dashboard {
+    display: inline-block;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
 
-    /* Responsive adjustments for cow detail card */
-    @media (max-width: 600px) {
-        .cow-details-card {
-            grid-template-columns: 1fr; /* Stack photo on top */
-            text-align: center;
-        }
-        .cow-photo-container {
-            margin: 0 auto 20px auto;
-        }
-        .cow-details-grid {
-            text-align: left;
-        }
-    }
+.btn-owner {
+    background: #4A7729;
+    color: #fff;
+}
+.btn-owner:hover, .btn-owner:focus {
+    background: #C68859;
+    color: #fff;
+}
+
+.btn-dashboard {
+    background: #C68859;
+    color: #fff;
+}
+.btn-dashboard:hover, .btn-dashboard:focus {
+    background: #4A7729;
+    color: #fff;
+}
+
+.page-header::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.cow-detail-actions {
+    float: right;
+    display: flex;
+    gap: 12px;
+    margin-top: -70px;
+    margin-bottom: auto; /* Add more space below the buttons */
+    position: relative;
+    z-index: 2;
+    padding: 24px 24px 24px 24px;
+}
+
+.milk-quality-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* Optionally set a max-width if needed */
+    /* max-width: 600px; */
+}
+
