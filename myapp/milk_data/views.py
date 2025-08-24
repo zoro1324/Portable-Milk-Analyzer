@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, get_object_or_404
 from .models import Cow, District, MilkSubmission,Supplier
-from .forms import MilkSubmissionFilterForm, SupplierForm
+from .forms import CowForm, MilkSubmissionFilterForm, SupplierForm
 from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth import login,logout
@@ -222,6 +222,7 @@ def report(request,pk):
     recipient_list=["srishanth232007@gmail.com"],
     fail_silently=False,
 )
+    messages.success(request, 'Reported successfully! We will look into it. 📧')
     return redirect('milk_data:supplier_detail', pk=pk)  # replace 1 with actual supplier ID
 
 @login_required
@@ -271,10 +272,7 @@ def suppliers_page(request):
 
     return render(request, 'milk_data/suppliers.html', context)
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import CowForm
-
+@login_required
 def add_cow(request,supplier_id):
     """
     View to add a new cow.
@@ -290,7 +288,7 @@ def add_cow(request,supplier_id):
                 cow.supplier = supplier       # Assign the supplier foreign key
                 cow.save() 
                 messages.success(request, 'Successfully added a new cow! 🐄')
-                return redirect('supplier_detail',pk=supplier_id)  # Replace with your success URL
+                return redirect('milk_data:     supplier_detail',pk=supplier_id)  # Replace with your success URL
             except Exception as e:
                 messages.error(request, f'An error occurred: {e}')
     else:

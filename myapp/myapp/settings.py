@@ -139,3 +139,6 @@ EMAIL_USE_TLS = decouple.config("EMAIL_USE_TLS", cast=bool)  # True for TLS
 EMAIL_HOST_USER = decouple.config("EMAIL_HOST_USER")       # replace with your email
 EMAIL_HOST_PASSWORD = decouple.config("EMAIL_HOST_PASSWORD")     # use Gmail App Password, not your normal password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = 'milk_data:login'
+LOGIN_REDIRECT_URL = 'milk_data:dashboard'
